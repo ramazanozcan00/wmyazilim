@@ -1,0 +1,96 @@
+﻿@model List<wmyazilim.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Sepetim";
+}
+
+<div class="container py-5">
+    <h2 class="mb-4 fw-bold"><i class="bi bi-cart3 text-primary"></i> Alışveriş Sepetim</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-warning text-center py-5">
+            <h4>Sepetiniz boş 😔</h4>
+            <p>Hemen harika yazılımlarımızı keşfetmeye başla!</p>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Alışverişe Başla</a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th class="ps-4">Ürün</th>
+                                        <th>Fiyat</th>
+                                        <th>Adet</th>
+                                        <th>Toplam</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="ps-4">
+                                                <div class="d-flex align-items-center">
+                                                    <img src="@item.Product.ImageUrl" alt="" style="width: 50px; height: 50px; object-fit: cover;" class="rounded me-3">
+                                                    <div>
+                                                        <h6 class="mb-0 fw-bold">@item.Product.Title</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>₺@item.Product.Price.ToString("N0")</td>
+                                            <td>
+                                                <span class="badge bg-secondary rounded-pill">@item.Quantity</span>
+                                            </td>
+                                            <td class="fw-bold text-primary">₺@((item.Product.Price * item.Quantity).ToString("N0"))</td>
+                                            <td>
+                                                <a asp-action="RemoveFromCart" asp-route-id="@item.Product.Id" class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 bg-light">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4">Sipariş Özeti</h5>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">Ara Toplam</span>
+                            <span class="fw-bold">₺@ViewBag.Total.ToString("N0")</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">KDV (%20)</span>
+
+                            <span class="fw-bold">₺@((ViewBag.Total * 0.20m).ToString("N0"))</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="h5 fw-bold">Genel Toplam</span>
+
+                            <span class="h4 fw-bold text-primary">₺@((ViewBag.Total * 1.20m).ToString("N0"))</span>
+                        </div>
+
+                        <button class="btn btn-success w-100 btn-lg py-3 fw-bold shadow">
+                            Ödemeye Geç <i class="bi bi-credit-card ms-2"></i>
+                        </button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-link w-100 mt-2 text-decoration-none text-muted">
+                            Alışverişe Devam Et
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
