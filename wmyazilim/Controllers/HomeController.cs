@@ -18,6 +18,17 @@ namespace wmyazilim.Controllers
             _context = context;
         }
 
+
+
+
+        // GET: Sayfayý görüntüler
+        [HttpGet]
+        public IActionResult DemoRequest()
+        {
+            return View();
+        }
+
+        // POST: Formu kaydeder
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DemoRequest(DemoRequest model)
@@ -27,14 +38,11 @@ namespace wmyazilim.Controllers
                 model.CreatedDate = DateTime.Now;
                 _context.DemoRequests.Add(model);
                 await _context.SaveChangesAsync();
-
-                // Baþarý mesajýný TempData ile gönderiyoruz
                 TempData["DemoSuccess"] = "true";
                 return RedirectToAction("Index");
             }
             return View(model);
         }
-
         public async Task<IActionResult> Index()
         {
             // Veritabanýndaki ürünleri asenkron olarak çekiyoruz
@@ -81,10 +89,6 @@ namespace wmyazilim.Controllers
             return View();
         }
 
-        // Demo Talebi Sayfasý
-        public IActionResult DemoRequest()
-        {
-            return View();
-        }
+      
     }
 }

@@ -1,91 +1,116 @@
 :root {
-    --primary-color: #4361ee;
-    --secondary-color: #3f37c9;
-    --accent-color: #4cc9f0;
-    --dark-bg: #0b0f19;
-    --card-bg: #ffffff;
+    /* Color Palette */
+    --primary: #2563EB;
+    --primary-hover: #1D4ED8;
+    --dark: #0B1220;
+    --bg-light: #F6F8FC;
+    --accent: #22C55E;
+    --text-main: #1F2937;
+    --text-muted: #6B7280;
+    --card-bg: #FFFFFF;
+    --border-color: #E5E7EB;
+    --radius-lg: 1rem;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.05);
+}
+
+/* Dark Mode Support */
+[data-bs-theme="dark"] {
+    --bg-light: #0B1220;
+    --card-bg: #151D2E;
+    --text-main: #F9FAFB;
+    --text-muted: #9CA3AF;
+    --border-color: #1F2937;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    overflow-x: hidden;
 }
 
-/* Navbar Tasarýmý */
+/* Layout Components */
 .navbar-custom {
-    background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-brand {
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-/* Hero (Karþýlama) Alaný */
-.hero-section {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    padding: 100px 0;
-    position: relative;
-    overflow: hidden;
-    border-radius: 0 0 50px 50px; /* Alt köþeleri yuvarlatma */
-}
-
-/* Ürün Kartlarý - UX Odaklý */
-.product-card {
-    border: none;
-    border-radius: 15px;
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
     transition: all 0.3s ease;
-    overflow: hidden;
-    position: relative;
 }
 
-    .product-card:hover {
-        transform: translateY(-10px); /* Yukarý doðru süzülme efekti */
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+/* UI Components */
+.btn-premium {
+    background-color: var(--primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: transform 0.2s;
+    border: none;
+}
+
+    .btn-premium:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-2px);
+        color: white;
     }
 
-.product-img-wrapper {
-    height: 200px;
-    overflow: hidden;
-    background-color: #eee;
-    display: flex;
+.card-premium {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    padding: 2rem;
+}
+
+    .card-premium:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary);
+    }
+
+/* Badge */
+.badge-soft {
+    padding: 0.5em 1em;
+    border-radius: 2rem;
+    font-weight: 500;
+    background-color: rgba(37, 99, 235, 0.1);
+    color: var(--primary);
+}
+
+/* Sections */
+.hero-section {
+    padding: 100px 0;
+    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), transparent);
+}
+
+
+/* Form Floating Focus Styling */
+.form-floating > .form-control:focus {
+    background-color: #fff !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.1) !important;
+}
+
+.form-floating > label {
+    padding-left: 1.2rem;
+    color: var(--text-muted);
+}
+
+/* Success State (Controller'dan TempData ile tetiklenebilir) */
+.demo-success-card {
+    border-radius: var(--radius-lg);
+    background: #ecfdf5;
+    border: 1px solid #10b981;
+    padding: 2rem;
+    text-align: center;
+}
+
+.icon-box-sm {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-}
-
-    .product-img-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-    }
-
-.product-card:hover .product-img-wrapper img {
-    transform: scale(1.1); /* Resim hafifçe büyür */
-}
-
-/* Butonlar */
-.btn-primary-custom {
-    background-color: var(--primary-color);
-    border: none;
-    padding: 10px 25px;
-    border-radius: 50px;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-    .btn-primary-custom:hover {
-        background-color: var(--secondary-color);
-        box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
-        transform: scale(1.05);
-    }
-
-.price-tag {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--primary-color);
+    font-size: 0.9rem;
 }

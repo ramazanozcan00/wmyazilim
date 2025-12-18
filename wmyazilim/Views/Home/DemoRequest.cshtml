@@ -1,123 +1,54 @@
 ﻿@model wmyazilim.Models.DemoRequest
-
 @{
-    ViewData["Title"] = "Demo Talebi";
+    ViewData["Title"] = "Demo Talebi Oluştur";
 }
 
-<style>
-    /* Modern UI/UX Dokunuşları */
-    .demo-card {
-        border: none;
-        border-radius: 15px;
-        overflow: hidden;
-        transition: transform 0.3s ease;
-    }
+<section class="py-5 hero-section">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold mb-4">Ürünümüzü Yakından <span class="text-primary">Tanıyın</span></h1>
+                <p class="lead text-muted mb-4">İşletmenizi dijital dünyada bir adım öne taşıyacak çözümlerimizi uzman ekibimizle keşfedin.</p>
+            </div>
 
-    .demo-header {
-        background: linear-gradient(135deg, #0dcaf0 0%, #0097b2 100%);
-        padding: 2rem;
-        border: none;
-    }
+            <div class="col-lg-6">
+                <div class="card-premium p-4 p-md-5 border-0 shadow-lg">
+                    <h3 class="fw-bold mb-4">Demo Formu</h3>
 
-    .form-floating > .form-control:focus {
-        border-color: #0dcaf0;
-        box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.15);
-    }
-
-    .btn-submit {
-        background: linear-gradient(135deg, #0dcaf0 0%, #0097b2 100%);
-        border: none;
-        padding: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-        border-radius: 10px;
-        transition: all 0.3s ease;
-    }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(13, 202, 240, 0.4);
-            opacity: 0.9;
-        }
-
-    .icon-box {
-        width: 60px;
-        height: 60px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1rem;
-    }
-</style>
-
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8">
-            <div class="card demo-card shadow-lg">
-                <div class="card-header demo-header text-white text-center">
-                    <div class="d-flex justify-content-center">
-                        <div class="icon-box">
-                            <i class="bi bi-rocket-takeoff fs-2"></i>
-                        </div>
-                    </div>
-                    <h2 class="fw-bold">Hemen Deneyin</h2>
-                    <p class="mb-0 opacity-75">Yazılım çözümlerimizi yakından incelemek için formu doldurun.</p>
-                </div>
-
-                <div class="card-body p-4 p-md-5">
                     <form asp-action="DemoRequest" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
 
                         <div class="form-floating mb-3">
-                            <input asp-for="FullName" class="form-control" placeholder="İsim Soyisim" id="floatingName" />
-                            <label asp-for="FullName"><i class="bi bi-person me-2"></i>İsim Soyisim</label>
+                            <input asp-for="FullName" class="form-control bg-light border-0" placeholder="Ad Soyad" style="border-radius: 0.75rem;">
+                            <label asp-for="FullName">Ad Soyad</label>
                             <span asp-validation-for="FullName" class="text-danger small"></span>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input asp-for="CompanyName" class="form-control" placeholder="Firma İsmi" id="floatingCompany" />
-                            <label asp-for="CompanyName"><i class="bi bi-building me-2"></i>Firma İsmi</label>
+                            <input asp-for="CompanyName" class="form-control bg-light border-0" placeholder="Firma İsmi" style="border-radius: 0.75rem;">
+                            <label asp-for="CompanyName">Firma İsmi</label>
                             <span asp-validation-for="CompanyName" class="text-danger small"></span>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input asp-for="Phone" class="form-control" type="tel" placeholder="Telefon" id="floatingPhone" />
-                            <label asp-for="Phone"><i class="bi bi-telephone me-2"></i>Telefon</label>
+                            <input asp-for="Phone" class="form-control bg-light border-0" placeholder="Telefon" style="border-radius: 0.75rem;">
+                            <label asp-for="Phone">Telefon Numarası</label>
                             <span asp-validation-for="Phone" class="text-danger small"></span>
                         </div>
 
                         <div class="form-floating mb-4">
-                            <input asp-for="Email" class="form-control" type="email" placeholder="Mail" id="floatingEmail" />
-                            <label asp-for="Email"><i class="bi bi-envelope me-2"></i>Mail Adresi</label>
+                            <input asp-for="Email" type="email" class="form-control bg-light border-0" placeholder="E-posta" style="border-radius: 0.75rem;">
+                            <label asp-for="Email">E-posta Adresi</label>
                             <span asp-validation-for="Email" class="text-danger small"></span>
                         </div>
 
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-info btn-submit text-white text-uppercase">
-                                Demo Talebi Gönder <i class="bi bi-send ms-2"></i>
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-premium w-100 py-3 fs-5 shadow-sm">
+                            <i class="bi bi-send-fill me-2"></i> Talebi Gönder
+                        </button>
                     </form>
                 </div>
-
-                <div class="card-footer bg-light border-0 py-3 text-center">
-                    <small class="text-muted">
-                        <i class="bi bi-shield-check text-success me-1"></i> Verileriniz 256-bit SSL ile korunmaktadır.
-                    </small>
-                </div>
-            </div>
-
-            <div class="text-center mt-4 text-muted">
-                <p>Sorunuz mu var? <a href="#" class="text-info text-decoration-none fw-bold">Bize Ulaşın</a></p>
             </div>
         </div>
     </div>
-</div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+</section>
