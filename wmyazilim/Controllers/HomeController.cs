@@ -18,6 +18,23 @@ namespace wmyazilim.Controllers
             _context = context;
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DemoRequest(DemoRequest model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.CreatedDate = DateTime.Now;
+                _context.DemoRequests.Add(model);
+                await _context.SaveChangesAsync();
+
+                // Baþarý mesajýný TempData ile gönderiyoruz
+                TempData["DemoSuccess"] = "true";
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
         public async Task<IActionResult> Index()
         {
             // Veritabanýndaki ürünleri asenkron olarak çekiyoruz
@@ -55,6 +72,19 @@ namespace wmyazilim.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        // Referanslar Sayfasý
+        public IActionResult References()
+        {
+            return View();
+        }
+
+        // Demo Talebi Sayfasý
+        public IActionResult DemoRequest()
+        {
+            return View();
         }
     }
 }

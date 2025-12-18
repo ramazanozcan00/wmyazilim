@@ -27,15 +27,33 @@
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="References">Referanslar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="DemoRequest">Demo Talebi</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="Privacy">Gizlilik</a>
                         </li>
                     </ul>
 
                     <ul class="navbar-nav align-items-center">
-                        <li class="nav-item me-3">
-                            <a class="nav-link text-warning" asp-area="Admin" asp-controller="Products" asp-action="Index">
+                        <li class="nav-item dropdown me-3">
+                            <a class="nav-link dropdown-toggle text-warning" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-shield-lock"></i> Yönetici
                             </a>
+                            <ul class="dropdown-menu dropdown-menu-dark shadow" aria-labelledby="adminDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Products" asp-action="Index">
+                                        <i class="bi bi-box-seam me-2"></i> Ürün Yönetimi
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-info" asp-area="Admin" asp-controller="DemoRequests" asp-action="Index">
+                                        <i class="bi bi-envelope-exclamation me-2"></i> Demo Talepleri
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                         <li class="nav-item">
@@ -78,5 +96,30 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (TempData["DemoSuccess"] != null)
+    {
+        <script>
+            Swal.fire({
+                title: 'Talebiniz Alındı!',
+                text: 'Uzman ekibimiz en kısa sürede sizinle iletişime geçecektir.',
+                icon: 'success',
+                confirmButtonText: 'Tamam',
+                confirmButtonColor: '#0dcaf0',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });
+        </script>
+    }
+
+
+
+
 </body>
 </html>

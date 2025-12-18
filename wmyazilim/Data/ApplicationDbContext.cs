@@ -12,6 +12,8 @@ namespace wmyazilim.Data
         // Veritabanındaki 'Products' tablosunu temsil eder
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<DemoRequest> DemoRequests { get; set; }
+
         // Veritabanı ilk oluşurken içine varsayılan veri ekleyelim (Seed Data)
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
