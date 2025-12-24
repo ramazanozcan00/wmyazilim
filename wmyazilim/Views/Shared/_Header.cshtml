@@ -1,22 +1,51 @@
-﻿<header>
-    <nav class="navbar navbar-expand-lg navbar-custom fixed-top py-3">
+﻿@using wmyazilim.Data
+@inject ApplicationDbContext _context
+@{
+    // Veritabanından menüleri çekiyoruz
+    var menuItems = _context.HeaderMenuItems.Where(x => x.IsActive).OrderBy(x => x.Order).ToList();
+}
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-4" asp-controller="Home" asp-action="Index">
-                <span style="color: var(--primary);">WM</span>Yazılım
+            <a class="navbar-brand d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index">
+                <div class="bg-primary text-white rounded-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px;">
+                    <i class="bi bi-code-square fs-5"></i>
+                </div>
+                <span class="fw-bold fs-4 text-dark">WM<span class="text-primary">Yazılım</span></span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link px-3" asp-action="Index">Anasayfa</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="#products">Ürünler</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="#pricing">Fiyatlandırma</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" asp-action="About">Hakkımızda</a></li>
+                    @foreach (var item in menuItems)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link px-3" href="@item.Url">@item.Title</a>
+                        </li>
+                    }
                 </ul>
-                <div class="d-flex align-items-center gap-3">
-                    <a asp-controller="Account" asp-action="Login" class="text-decoration-none text-dark fw-medium">Giriş Yap</a>
-                    <a asp-controller="Account" asp-action="Register" class="btn btn-premium">Hemen Başla</a>
+
+                <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                            Yönetim Paneli
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Admin" asp-action="Account" asp-route-action="Login" class="text-decoration-none text-secondary fw-semibold px-2 small">
+                            Giriş Yap
+                        </a>
+                    }
+                    <a asp-controller="Home" asp-action="DemoRequest" class="btn btn-premium d-flex align-items-center gap-2 btn-sm px-4 rounded-pill">
+                        <span>Demo İste</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>

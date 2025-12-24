@@ -1,0 +1,183 @@
+﻿@model wmyazilim.Areas.Admin.Controllers.SiteSettingsViewModel
+@{
+    ViewData["Title"] = "Site Ayarları";
+    Layout = "_AdminLayout";
+}
+
+<div class="card shadow-sm border-0 rounded-4 mb-4">
+    <div class="card-header bg-white p-4 border-bottom d-flex align-items-center gap-2">
+        <i class="bi bi-window-fullscreen text-primary"></i>
+        <h5 class="fw-bold mb-0">Anasayfa Banner & Görsel Ayarları</h5>
+    </div>
+    <div class="card-body p-4">
+        <form asp-action="UpdateHero" method="post">
+            <div class="row g-3">
+
+                <div class="col-12">
+                    <div class="p-3 bg-primary bg-opacity-10 border border-primary border-opacity-25 rounded-3 mb-3">
+                        <h6 class="fw-bold text-primary mb-3"><i class="bi bi-patch-check"></i> Üst Rozet (Badge) Ayarları</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-dark">Rozet Metni</label>
+                                <input type="text" name="BadgeText" class="form-control" value="@Model.HeroSetting.BadgeText" placeholder="Örn: %20 İndirim Başladı">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-dark">
+                                    İkon Sınıfı
+                                    <a href="https://icons.getbootstrap.com/" target="_blank" class="text-decoration-none small ms-1">(İkon Bul <i class="bi bi-box-arrow-up-right"></i>)</a>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="bi @Model.HeroSetting.BadgeIcon"></i></span>
+                                    <input type="text" name="BadgeIcon" class="form-control" value="@Model.HeroSetting.BadgeIcon" placeholder="Örn: bi-stars">
+                                </div>
+                                <small class="text-muted" style="font-size: 0.7rem;">Bootstrap Icon sınıfını yazın (örn: bi-rocket, bi-gift)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold text-muted">Ana Başlık (Slogan)</label>
+                    <input type="text" name="MainTitle" class="form-control" value="@Model.HeroSetting.MainTitle" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold text-muted">Dashboard Fotoğraf URL</label>
+                    <input type="text" name="HeroImageUrl" class="form-control" value="@Model.HeroSetting.HeroImageUrl" placeholder="https://..." required>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label small fw-bold text-muted">Alt Açıklama</label>
+                    <textarea name="SubDescription" class="form-control" rows="2">@Model.HeroSetting.SubDescription</textarea>
+                </div>
+
+                <hr class="text-muted opacity-25 my-2">
+
+                <div class="col-md-3">
+                    <label class="form-label small fw-bold text-primary">1. Buton Yazısı</label>
+                    <input type="text" name="Button1Text" class="form-control form-control-sm" value="@Model.HeroSetting.Button1Text">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-bold text-primary">1. Buton Linki</label>
+                    <input type="text" name="Button1Url" class="form-control form-control-sm" value="@Model.HeroSetting.Button1Url">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label small fw-bold text-secondary">2. Buton Yazısı</label>
+                    <input type="text" name="Button2Text" class="form-control form-control-sm" value="@Model.HeroSetting.Button2Text">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-bold text-secondary">2. Buton Linki</label>
+                    <input type="text" name="Button2Url" class="form-control form-control-sm" value="@Model.HeroSetting.Button2Url">
+                </div>
+
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save me-2"></i> Banner'ı Güncelle
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white p-4 border-bottom">
+                <h5 class="fw-bold mb-0">Üst Menü Yönetimi</h5>
+            </div>
+            <div class="card-body p-4">
+
+                <form asp-action="CreateMenu" method="post" class="row g-2 mb-4 align-items-end p-3 bg-light rounded-3">
+                    <div class="col-md-4">
+                        <label class="small text-muted mb-1">Başlık</label>
+                        <input type="text" name="Title" class="form-control form-control-sm" placeholder="Örn: Blog" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="small text-muted mb-1">Link (URL)</label>
+                        <input type="text" name="Url" class="form-control form-control-sm" placeholder="Örn: /Home/Blog" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="small text-muted mb-1">Sıra</label>
+                        <input type="number" name="Order" class="form-control form-control-sm" value="1">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary btn-sm w-100">Ekle</button>
+                    </div>
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Sıra</th>
+                                <th>Başlık</th>
+                                <th>Link</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.MenuItems)
+                            {
+                                <tr>
+                                    <td><span class="badge bg-secondary">@item.Order</span></td>
+                                    <td class="fw-bold">@item.Title</td>
+                                    <td class="text-muted small">@item.Url</td>
+                                    <td>
+                                        <form asp-action="DeleteMenu" method="post" style="display:inline;">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit" class="btn btn-sm btn-outline-danger border-0">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white p-4 border-bottom">
+                <h5 class="fw-bold mb-0">Footer (Alt Kısım) Ayarları</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="UpdateFooter" method="post">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Site Açıklaması</label>
+                        <textarea name="Description" class="form-control" rows="3">@Model.FooterSetting.Description</textarea>
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Email</label>
+                            <input type="email" name="Email" class="form-control" value="@Model.FooterSetting.Email">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Telefon</label>
+                            <input type="text" name="PhoneNumber" class="form-control" value="@Model.FooterSetting.PhoneNumber">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Adres</label>
+                        <input type="text" name="Address" class="form-control" value="@Model.FooterSetting.Address">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Copyright Yazısı</label>
+                        <input type="text" name="CopyrightText" class="form-control" value="@Model.FooterSetting.CopyrightText">
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100 py-2">
+                        <i class="bi bi-save me-2"></i> Ayarları Kaydet
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

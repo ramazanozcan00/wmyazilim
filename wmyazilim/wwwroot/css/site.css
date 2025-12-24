@@ -1,116 +1,342 @@
 :root {
-    /* Color Palette */
-    --primary: #2563EB;
-    --primary-hover: #1D4ED8;
-    --dark: #0B1220;
-    --bg-light: #F6F8FC;
-    --accent: #22C55E;
-    --text-main: #1F2937;
-    --text-muted: #6B7280;
-    --card-bg: #FFFFFF;
-    --border-color: #E5E7EB;
-    --radius-lg: 1rem;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-    --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.05);
+    /* --- MODERN SAAS PALETÝ --- */
+    /* Ana Renk: Menekþe/Violet */
+    --primary: #7C3AED;
+    --primary-dark: #6D28D9;
+    --primary-light: #DDD6FE;
+    /* Ýkincil Renk: Zümrüt/Emerald */
+    --accent: #10B981;
+    --accent-dark: #059669;
+    /* Nötr Renkler: Slate */
+    --dark: #0F172A; /* Sidebar Rengi */
+    --secondary: #64748B;
+    --light: #F8FAFC; /* Arkaplan Rengi */
+    --surface: #FFFFFF; /* Kart Rengi */
+    /* Gölgeler ve Efektler */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-glow: 0 0 20px rgba(124, 58, 237, 0.25);
+    --radius-xl: 1rem;
 }
 
-/* Dark Mode Support */
-[data-bs-theme="dark"] {
-    --bg-light: #0B1220;
-    --card-bg: #151D2E;
-    --text-main: #F9FAFB;
-    --text-muted: #9CA3AF;
-    --border-color: #1F2937;
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- BOOTSTRAP OVERRIDES --- */
+.text-primary {
+    color: var(--primary) !important;
+}
+
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+    .btn-primary:hover {
+        background-color: var(--primary-dark) !important;
+        border-color: var(--primary-dark) !important;
+    }
+
+.btn-outline-primary {
+    color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+    .btn-outline-primary:hover {
+        background-color: var(--primary) !important;
+        color: white !important;
+    }
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+    a:hover {
+        color: var(--primary-dark);
+    }
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--dark);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* --- ANA SÝTE BÝLEÞENLERÝ --- */
+.navbar-custom {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    padding: 1rem 0;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--secondary) !important;
+    font-size: 0.95rem;
+}
+
+    .nav-link:hover, .nav-link.active {
+        color: var(--primary) !important;
+    }
+
+.card-premium {
+    background: var(--surface);
+    border: 1px solid #E2E8F0;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    height: 100%;
+}
+
+    .card-premium:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+        border-color: rgba(124, 58, 237, 0.3);
+    }
+
+.btn-premium {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.3);
+    transition: all 0.2s ease;
+}
+
+    .btn-premium:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.4);
+        color: white;
+    }
+
+.hero-section {
+    position: relative;
+    padding: 120px 0 100px;
+    background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.08) 0%, transparent 40%), radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+}
+
+.product-img-wrapper {
+    height: 240px;
+    background: #F1F5F9;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+    .product-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+.card-premium:hover .product-img-wrapper img {
+    transform: scale(1.05);
+}
+
+.badge-soft {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+.footer-premium {
+    background-color: #FFFFFF;
+    border-top: 1px solid #E2E8F0;
+}
+
+/* --- ADMIN PANELÝ ÖZEL (ESKÝ - MAVÝ) --- */
+/* Bu sýnýf admin sayfalarýnda body'e eklendiði için renkleri ezer */
+.admin-theme {
+    --primary: #2563EB; /* Klasik Mavi */
+    --primary-dark: #1E40AF;
+    --primary-light: #EFF6FF;
+    --accent: #F59E0B; /* Turuncu vurgu */
+    --dark: #0B1220; /* Koyu Lacivert */
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-light);
-    color: var(--text-main);
+    background-color: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
     overflow-x: hidden;
 }
 
-/* Layout Components */
-.navbar-custom {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+/* --- BOOTSTRAP OVERRIDES --- */
+/* .admin-theme içindeyken mavi, dýþýndayken menekþe olur */
+.text-primary {
+    color: var(--primary) !important;
 }
 
-/* UI Components */
-.btn-premium {
-    background-color: var(--primary);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.75rem;
-    font-weight: 600;
-    transition: transform 0.2s;
-    border: none;
+.bg-primary {
+    background-color: var(--primary) !important;
 }
 
-    .btn-premium:hover {
-        background-color: var(--primary-hover);
-        transform: translateY(-2px);
-        color: white;
+.btn-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+    .btn-primary:hover {
+        background-color: var(--primary-dark) !important;
+        border-color: var(--primary-dark) !important;
     }
 
-.card-premium {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    transition: all 0.3s ease;
+.btn-outline-primary {
+    color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+    .btn-outline-primary:hover {
+        background-color: var(--primary) !important;
+        color: white !important;
+    }
+
+/* --- ADMIN PANEL ÖZEL ELEMENTLERÝ --- */
+
+/* 1. Sidebar (Sabit Sol Menü) */
+.admin-sidebar {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #0B1220 !important; /* Admin koyu renk */
+    color: white;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
+    border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+/* 2. Ýçerik Alaný (Sidebar'ýn saðýnda kalan kýsým) */
+.admin-content {
+    margin-left: 260px; /* Sidebar geniþliði kadar boþluk */
     padding: 2rem;
+    min-height: 100vh;
+    background-color: #F8F9FA; /* Admin arkaplan */
+    width: auto;
+}
+
+/* 3. Admin Menü Linkleri */
+.nav-link-admin {
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+    .nav-link-admin:hover {
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-link-admin.active {
+        background: var(--primary); /* Mavi */
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+/* 4. Admin Kartlarý */
+.admin-card, .admin-stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    height: 100%;
+}
+
+    .admin-card:hover {
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+        transition: all 0.2s;
+    }
+
+/* 5. Giriþ Ekraný */
+.admin-login-body {
+    background-color: #0B1220; /* Koyu Lacivert */
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.15), transparent 50%);
+}
+
+/* --- PUBLIC SÝTE (ANASAYFA) ELEMENTLERÝ --- */
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.navbar-custom {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 0;
+}
+
+.card-premium {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-xl);
+    transition: transform 0.3s;
+    overflow: hidden;
 }
 
     .card-premium:hover {
         transform: translateY(-5px);
         border-color: var(--primary);
+        box-shadow: var(--shadow-lg);
     }
 
-/* Badge */
-.badge-soft {
-    padding: 0.5em 1em;
-    border-radius: 2rem;
-    font-weight: 500;
-    background-color: rgba(37, 99, 235, 0.1);
-    color: var(--primary);
+.btn-premium {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
 }
 
-/* Sections */
 .hero-section {
-    padding: 100px 0;
-    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), transparent);
-}
-
-
-/* Form Floating Focus Styling */
-.form-floating > .form-control:focus {
-    background-color: #fff !important;
-    border-color: var(--primary) !important;
-    box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.1) !important;
-}
-
-.form-floating > label {
-    padding-left: 1.2rem;
-    color: var(--text-muted);
-}
-
-/* Success State (Controller'dan TempData ile tetiklenebilir) */
-.demo-success-card {
-    border-radius: var(--radius-lg);
-    background: #ecfdf5;
-    border: 1px solid #10b981;
-    padding: 2rem;
-    text-align: center;
-}
-
-.icon-box-sm {
-    width: 32px;
-    height: 32px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
+    padding: 120px 0 100px;
+    background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.08) 0%, transparent 40%), radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
 }

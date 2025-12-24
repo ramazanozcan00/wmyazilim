@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using wmyazilim.Data;
 
@@ -11,9 +12,11 @@ using wmyazilim.Data;
 namespace wmyazilim.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251224222237_UpdateProductPricing")]
+    partial class UpdateProductPricing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,8 +139,8 @@ namespace wmyazilim.Migrations
                             Id = 2,
                             IsActive = true,
                             Order = 2,
-                            Title = "Fiyatlandırma",
-                            Url = "/#pricing"
+                            Title = "Ürünler",
+                            Url = "/#products"
                         },
                         new
                         {
@@ -250,10 +253,6 @@ namespace wmyazilim.Migrations
                     b.Property<decimal>("PriceYearly")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Slogan")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -266,38 +265,35 @@ namespace wmyazilim.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Küçük işletmeler ve startup'lar için ideal.",
-                            Features = "Temel E-Ticaret Modülü|Sınırsız Ürün Ekleme|Standart SEO Desteği|E-posta Desteği",
-                            ImageUrl = "",
+                            Description = "Hızlı ve güvenli online satış altyapısı.",
+                            Features = "",
+                            ImageUrl = "https://placehold.co/600x400?text=E-Ticaret",
                             IsPopular = false,
-                            Price = 499m,
-                            PriceYearly = 4990m,
-                            Slogan = "",
-                            Title = "Başlangıç Paketi"
+                            Price = 4999m,
+                            PriceYearly = 0m,
+                            Title = "WM E-Ticaret Paketi"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Büyüyen işletmeler için tam kapsamlı çözüm.",
-                            Features = "Gelişmiş E-Ticaret|Pazaryeri Entegrasyonu|Yapay Zeka SEO|7/24 Canlı Destek|Mobil Uygulama (Android)",
-                            ImageUrl = "",
-                            IsPopular = true,
-                            Price = 999m,
-                            PriceYearly = 9990m,
-                            Slogan = "Yıllık planda 2 ay hediye!",
-                            Title = "Profesyonel Paket"
+                            Description = "Google sıralamanızı yükselten analiz aracı.",
+                            Features = "",
+                            ImageUrl = "https://placehold.co/600x400?text=SEO+Tool",
+                            IsPopular = false,
+                            Price = 2499m,
+                            PriceYearly = 0m,
+                            Title = "Kurumsal SEO Yazılımı"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Kurumsal firmalar için özel altyapı.",
-                            Features = "Özel Sunucu Altyapısı|Tüm Pazaryerleri|Global SEO Paketi|Özel Müşteri Temsilcisi|iOS ve Android Uygulama|Sınırsız API Erişimi",
-                            ImageUrl = "",
+                            Description = "Sipariş ve stok takibi için profesyonel çözüm.",
+                            Features = "",
+                            ImageUrl = "https://placehold.co/600x400?text=Otomasyon",
                             IsPopular = false,
-                            Price = 1999m,
-                            PriceYearly = 19990m,
-                            Slogan = "%25 İndirim Fırsatı",
-                            Title = "Enterprise"
+                            Price = 3500m,
+                            PriceYearly = 0m,
+                            Title = "Restoran Otomasyonu"
                         });
                 });
 #pragma warning restore 612, 618

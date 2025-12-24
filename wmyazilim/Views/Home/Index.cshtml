@@ -1,69 +1,141 @@
-﻿@model IEnumerable<wmyazilim.Models.Product>
+﻿@using wmyazilim.Data
+@inject ApplicationDbContext _context
+@model IEnumerable<wmyazilim.Models.Product>
+
 @{
     ViewData["Title"] = "Geleceğin Yazılım Çözümleri";
+    var hero = _context.HeroSettings.FirstOrDefault() ?? new wmyazilim.Models.HeroSetting();
 }
 
-<section class="hero-section position-relative overflow-hidden">
+<section class="hero-section">
     <div class="container">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-6 text-center text-lg-start">
-                <div class="badge badge-soft mb-3 animate__animated animate__fadeInDown">
-                    <i class="bi bi-stars me-2"></i> Yeni Nesil Lisanslama Sistemi
-                </div>
-                <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInUp">
-                    İşinizi <span class="text-primary">Dijitalde</span> <br />Sınır Tanımadan Büyütün
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-6 order-2 order-lg-1">
+                @if (!string.IsNullOrEmpty(hero.BadgeText))
+                {
+                    <div class="badge-soft d-inline-flex align-items-center gap-2 mb-4 animate__animated animate__fadeInDown">
+                        @if (!string.IsNullOrEmpty(hero.BadgeIcon))
+                        {
+                            <i class="bi @hero.BadgeIcon fs-5"></i>
+                        }
+                        <span class="fw-semibold">@hero.BadgeText</span>
+                    </div>
+                }
+
+                <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInUp" style="line-height: 1.1;">
+                    @Html.Raw(hero.MainTitle)
                 </h1>
-                <p class="lead text-muted mb-5 animate__animated animate__fadeInUp">
-                    WMYazılım ile karmaşık süreçleri otomatiğe bağlayın. Modern dashboard ve anında lisans teslimatı ile fark yaratın.
+
+                <p class="lead text-secondary mb-5 animate__animated animate__fadeInUp" style="max-width: 520px;">
+                    @hero.SubDescription
                 </p>
-                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start animate__animated animate__fadeInUp">
 
-                    <a asp-controller="Home" asp-action="DemoRequest" class="btn btn-premium btn-lg shadow-lg">
-                        <i class="bi bi-rocket-takeoff me-2"></i> Ücretsiz Demo İste
-                    </a>
+                <div class="d-flex flex-wrap gap-3 animate__animated animate__fadeInUp">
+                    @if (!string.IsNullOrEmpty(hero.Button1Text))
+                    {
+                        <a href="@hero.Button1Url" class="btn btn-premium btn-lg px-4">@hero.Button1Text</a>
+                    }
+                    @if (!string.IsNullOrEmpty(hero.Button2Text))
+                    {
+                        <a href="@hero.Button2Url" class="btn btn-light btn-lg border text-secondary px-4"><i class="bi bi-play-circle me-2"></i> @hero.Button2Text</a>
+                    }
+                </div>
 
-                    <a href="#products" class="btn btn-outline-dark btn-lg px-4" style="border-radius: 0.75rem;">
-                        Ürünleri İncele
-                    </a>
+                <div class="mt-5 pt-4 border-top animate__animated animate__fadeIn" style="border-color: #e2e8f0 !important;">
+                    <p class="small text-muted fw-semibold mb-3 text-uppercase tracking-wider">Güvenilen İş Ortaklarımız</p>
+                    <div class="d-flex gap-4 opacity-50 grayscale">
+                        <i class="bi bi-microsoft fs-3"></i>
+                        <i class="bi bi-google fs-3"></i>
+                        <i class="bi bi-amazon fs-3"></i>
+                        <i class="bi bi-stripe fs-3"></i>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-6 animate__animated animate__zoomIn">
-                <div class="position-relative text-center">
-                    <div class="mockup-container shadow-2xl rounded-4 overflow-hidden border bg-white">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1000"
-                             class="img-fluid" alt="SaaS Dashboard Preview">
-                    </div>
+            <div class="col-lg-6 order-1 order-lg-2 animate__animated animate__fadeInRight">
+                <div class="position-relative p-3">
+                    <div class="position-absolute top-50 start-50 translate-middle w-75 h-75 bg-primary rounded-circle" style="filter: blur(90px); opacity: 0.15; z-index: -1;"></div>
+                    <img src="@hero.HeroImageUrl" alt="Dashboard Preview" class="img-fluid rounded-4 shadow-lg border border-white border-4" style="transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);">
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section id="products" class="py-5 mt-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold display-5">Popüler Çözümlerimiz</h2>
+<section id="pricing" class="py-5 bg-white">
+    <div class="container py-5">
+        <div class="text-center mb-5 mw-100 mx-auto" style="max-width: 700px;">
+            <span class="text-primary fw-bold text-uppercase tracking-wider small">Paketler</span>
+            <h2 class="display-5 fw-bold mt-2 mb-3">İhtiyacınıza Uygun Planı Seçin</h2>
+            <p class="text-secondary fs-5 mb-4">
+                İster aylık esneklik, ister yıllık avantaj. İstediğiniz zaman iptal edin.
+            </p>
+
+            <div class="d-inline-flex align-items-center bg-light rounded-pill p-1 border">
+                <button class="btn btn-sm rounded-pill fw-bold px-4 py-2 bg-white shadow-sm text-primary" id="btn-monthly" onclick="setPeriod('monthly')">Aylık</button>
+                <button class="btn btn-sm rounded-pill fw-bold px-4 py-2 text-muted" id="btn-yearly" onclick="setPeriod('yearly')">
+                    Yıllık <span class="badge bg-success text-white ms-1 rounded-pill" style="font-size: 0.65rem;">%20 İndirim</span>
+                </button>
+            </div>
         </div>
 
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center">
             @if (Model != null)
             {
                 @foreach (var item in Model)
                 {
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card-premium h-100 d-flex flex-column">
-                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 border-0 rounded-4 transition-all @(item.IsPopular ? "shadow-lg scale-105 border-primary border-2" : "shadow-sm border")"
+                             style="@(item.IsPopular ? "z-index: 10; transform: scale(1.02);" : "")">
+
+                            @if (item.IsPopular)
                             {
-                                <img src="@item.ImageUrl" class="rounded-3 mb-4 w-100 object-fit-cover" style="height:200px;" alt="@item.Title">
+                                <div class="bg-primary text-white text-center py-1 fw-bold small rounded-top-4">
+                                    <i class="bi bi-star-fill me-1"></i> En Çok Tercih Edilen
+                                </div>
                             }
-                            <h4 class="fw-bold mb-3">@item.Title</h4>
-                            <p class="text-muted small flex-grow-1">@item.Description</p>
-                            <div class="mt-4 pt-4 border-top d-flex align-items-center justify-content-between">
-                                <span class="fs-4 fw-bold text-dark">@item.Price.ToString("C2")</span>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-premium btn-sm px-4">
-                                    İncele
+
+                            <div class="card-body p-4 p-lg-5 d-flex flex-column">
+                                <h4 class="fw-bold mb-2">@item.Title</h4>
+                                <p class="text-muted small mb-4">@item.Description</p>
+
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-end">
+                                        <span class="fs-4 text-muted fw-bold me-1">₺</span>
+                                        <span class="display-4 fw-bold text-dark price-value"
+                                              data-monthly="@item.Price.ToString("N0")"
+                                              data-yearly="@item.PriceYearly.ToString("N0")">
+                                            @item.Price.ToString("N0")
+                                        </span>
+                                        <span class="text-muted ms-1 mb-2 price-period">/ay</span>
+                                    </div>
+                                    @if (item.IsPopular)
+                                    {
+                                        <small class="text-success fw-bold bg-success bg-opacity-10 px-2 py-1 rounded">Yıllık planda 2 ay hediye!</small>
+                                    }
+                                </div>
+
+                                <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id"
+                                   class="btn w-100 py-3 fw-bold rounded-3 mb-4 @(item.IsPopular ? "btn-primary shadow-primary" : "btn-outline-primary")">
+                                    Hemen Satın Al
                                 </a>
+
+                                <div class="mt-auto">
+                                    <p class="small fw-bold text-uppercase text-muted mb-3">Paket Özellikleri:</p>
+                                    <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+                                        @{
+                                            // Veritabanındaki "Özellik1|Özellik2" yapısını parçala
+                                            var features = item.Features.Split('|');
+                                        }
+                                        @foreach (var feature in features)
+                                        {
+                                            <li class="d-flex align-items-start gap-2 text-secondary small">
+                                                <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                                                <span>@feature</span>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -73,22 +145,115 @@
     </div>
 </section>
 
-<section class="py-5 my-5">
+<section id="features" class="py-5" style="background-color: #F8FAFC;">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5">
+                <h2 class="display-6 fw-bold mb-4">Neden <span class="text-primary">WMYazılım?</span></h2>
+                <div class="d-flex flex-column gap-4">
+                    <div class="d-flex gap-3">
+                        <div class="flex-shrink-0">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-3 text-primary">
+                                <i class="bi bi-shield-check fs-4"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-1">Kurumsal Güvenlik</h5>
+                            <p class="text-secondary mb-0 small">Verileriniz uçtan uca şifreleme ile güvende. ISO 27001 standartlarında altyapı.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <div class="flex-shrink-0">
+                            <div class="bg-success bg-opacity-10 p-3 rounded-3 text-success">
+                                <i class="bi bi-lightning-charge fs-4"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-1">Yüksek Performans</h5>
+                            <p class="text-secondary mb-0 small">Optimize edilmiş kod yapısı ile işlemlerinizi milisaniyeler içinde tamamlayın.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="row g-4">
+                    <div class="col-6">
+                        <div class="p-4 bg-white rounded-4 shadow-sm mb-4 border border-light">
+                            <h3 class="fw-bold text-primary display-6">500+</h3>
+                            <p class="text-muted mb-0 fw-medium">Mutlu Müşteri</p>
+                        </div>
+                        <div class="p-4 bg-dark text-white rounded-4 shadow-sm position-relative overflow-hidden">
+                            <div class="position-relative z-1">
+                                <h3 class="fw-bold text-warning display-6">%99.9</h3>
+                                <p class="text-light opacity-75 mb-0 fw-medium">Uptime Oranı</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mt-5">
+                        <div class="p-4 bg-white rounded-4 shadow-sm mb-4 border border-light">
+                            <h3 class="fw-bold text-success display-6">24/7</h3>
+                            <p class="text-muted mb-0 fw-medium">Canlı Destek</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
     <div class="container">
-        <div class="card-premium bg-dark text-white p-5 text-center position-relative overflow-hidden">
-            <div class="position-relative" style="z-index: 2;">
-                <h2 class="display-5 fw-bold mb-3">Hala Kararsız mısınız?</h2>
-                <p class="lead mb-4 opacity-75">Hemen ücretsiz bir demo talebi oluşturun, sistemi canlı görün.</p>
-
-                <a asp-controller="Home" asp-action="DemoRequest" class="btn btn-premium btn-lg px-5">
-                    Demo Talebi Başlat
+        <div class="position-relative bg-dark rounded-5 overflow-hidden p-5 text-center">
+            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);"></div>
+            <div class="position-relative z-1 py-4">
+                <h2 class="display-5 fw-bold text-white mb-3">Hala Kararsız mısınız?</h2>
+                <p class="lead text-white-50 mb-4 mx-auto" style="max-width: 600px;">
+                    Ücretsiz demo talebi oluşturun, sistemi canlı görün.
+                </p>
+                <a asp-controller="Home" asp-action="DemoRequest" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold shadow-lg border-0">
+                    Hemen Başlayın <i class="bi bi-arrow-right ms-2"></i>
                 </a>
-
             </div>
         </div>
     </div>
 </section>
 
 @section Scripts {
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script>
+        function setPeriod(period) {
+            const btnMonthly = document.getElementById('btn-monthly');
+            const btnYearly = document.getElementById('btn-yearly');
+            const prices = document.querySelectorAll('.price-value');
+            const periods = document.querySelectorAll('.price-period');
+
+            if (period === 'monthly') {
+                // Stil Değişimi
+                btnMonthly.classList.add('bg-white', 'shadow-sm', 'text-primary');
+                btnMonthly.classList.remove('text-muted');
+
+                btnYearly.classList.add('text-muted');
+                btnYearly.classList.remove('bg-white', 'shadow-sm', 'text-primary');
+
+                // Fiyatları Güncelle
+                prices.forEach(el => {
+                    el.innerText = el.getAttribute('data-monthly');
+                });
+                periods.forEach(el => el.innerText = '/ay');
+
+            } else {
+                // Stil Değişimi
+                btnYearly.classList.add('bg-white', 'shadow-sm', 'text-primary');
+                btnYearly.classList.remove('text-muted');
+
+                btnMonthly.classList.add('text-muted');
+                btnMonthly.classList.remove('bg-white', 'shadow-sm', 'text-primary');
+
+                // Fiyatları Güncelle
+                prices.forEach(el => {
+                    el.innerText = el.getAttribute('data-yearly');
+                });
+                periods.forEach(el => el.innerText = '/yıl');
+            }
+        }
+    </script>
 }

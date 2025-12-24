@@ -1,11 +1,13 @@
-using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; // Gerekli
+using System.Diagnostics;
 using wmyazilim.Data;                // Gerekli
 using wmyazilim.Models;
 
 namespace wmyazilim.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

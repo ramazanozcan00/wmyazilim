@@ -5,7 +5,8 @@ using wmyazilim.Models;
 
 namespace wmyazilim.Areas.Admin.Controllers
 {
-    [Area("Admin")] // Bu Controller'ın Admin alanına ait olduğunu belirtir
+    [Area("Admin")]
+    // [Authorize] // Giriş sistemini aktif ettiğinde burayı açmalısın
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -15,20 +16,19 @@ namespace wmyazilim.Areas.Admin.Controllers
             _context = context;
         }
 
-        // Ürünleri Listele
+        // LİSTELEME
         public async Task<IActionResult> Index()
         {
-            var products = await _context.Products.ToListAsync();
-            return View(products);
+            return View(await _context.Products.ToListAsync());
         }
 
-        // Yeni Ürün Ekleme Sayfası (GET)
+        // EKLEME SAYFASI (GET)
         public IActionResult Create()
         {
             return View();
         }
 
-        // Yeni Ürün Ekleme İşlemi (POST)
+        // EKLEME İŞLEMİ (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product product)
@@ -42,7 +42,42 @@ namespace wmyazilim.Areas.Admin.Controllers
             return View(product);
         }
 
-        // Ürün Silme İşlemi
+        // DÜZENLEME SAYFASI (GET)
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var product = await _context.Products.FindAsync(id);
+            if (product == null) return NotFound();
+
+            return View(product);
+        }
+
+        // DÜZENLEME İŞLEMİ (POST)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Product product)
+        {
+            if (id != product.Id) return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(product);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Products.Any(e => e.Id == product.Id)) return NotFound();
+                    else throw;
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
+        }
+
+        // SİLME İŞLEMİ (Direkt Silme)
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _context.Products.FindAsync(id);

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using wmyazilim.Data;
 
@@ -11,9 +12,11 @@ using wmyazilim.Data;
 namespace wmyazilim.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251224220551_uphero")]
+    partial class uphero
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,8 +139,8 @@ namespace wmyazilim.Migrations
                             Id = 2,
                             IsActive = true,
                             Order = 2,
-                            Title = "Fiyatlandırma",
-                            Url = "/#pricing"
+                            Title = "Ürünler",
+                            Url = "/#products"
                         },
                         new
                         {
@@ -157,70 +160,6 @@ namespace wmyazilim.Migrations
                         });
                 });
 
-            modelBuilder.Entity("wmyazilim.Models.HeroSetting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("BadgeIcon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BadgeText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Button1Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Button1Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Button2Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Button2Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HeroImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MainTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SubDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HeroSettings");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BadgeIcon = "bi-stars",
-                            BadgeText = "Yeni Sürüm Yayında",
-                            Button1Text = "Ücretsiz Başla",
-                            Button1Url = "/Home/DemoRequest",
-                            Button2Text = "Ürünleri Keşfet",
-                            Button2Url = "#products",
-                            HeroImageUrl = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80",
-                            MainTitle = "İşinizi Dijital Zekayla Büyütün",
-                            SubDescription = "WMYazılım ile süreçleri otomatiğe bağlayın."
-                        });
-                });
-
             modelBuilder.Entity("wmyazilim.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -233,26 +172,12 @@ namespace wmyazilim.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Features")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsPopular")
-                        .HasColumnType("bit");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PriceYearly")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Slogan")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -266,38 +191,26 @@ namespace wmyazilim.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Küçük işletmeler ve startup'lar için ideal.",
-                            Features = "Temel E-Ticaret Modülü|Sınırsız Ürün Ekleme|Standart SEO Desteği|E-posta Desteği",
-                            ImageUrl = "",
-                            IsPopular = false,
-                            Price = 499m,
-                            PriceYearly = 4990m,
-                            Slogan = "",
-                            Title = "Başlangıç Paketi"
+                            Description = "Hızlı ve güvenli online satış altyapısı.",
+                            ImageUrl = "https://placehold.co/600x400?text=E-Ticaret",
+                            Price = 4999m,
+                            Title = "WM E-Ticaret Paketi"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Büyüyen işletmeler için tam kapsamlı çözüm.",
-                            Features = "Gelişmiş E-Ticaret|Pazaryeri Entegrasyonu|Yapay Zeka SEO|7/24 Canlı Destek|Mobil Uygulama (Android)",
-                            ImageUrl = "",
-                            IsPopular = true,
-                            Price = 999m,
-                            PriceYearly = 9990m,
-                            Slogan = "Yıllık planda 2 ay hediye!",
-                            Title = "Profesyonel Paket"
+                            Description = "Google sıralamanızı yükselten analiz aracı.",
+                            ImageUrl = "https://placehold.co/600x400?text=SEO+Tool",
+                            Price = 2499m,
+                            Title = "Kurumsal SEO Yazılımı"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Kurumsal firmalar için özel altyapı.",
-                            Features = "Özel Sunucu Altyapısı|Tüm Pazaryerleri|Global SEO Paketi|Özel Müşteri Temsilcisi|iOS ve Android Uygulama|Sınırsız API Erişimi",
-                            ImageUrl = "",
-                            IsPopular = false,
-                            Price = 1999m,
-                            PriceYearly = 19990m,
-                            Slogan = "%25 İndirim Fırsatı",
-                            Title = "Enterprise"
+                            Description = "Sipariş ve stok takibi için profesyonel çözüm.",
+                            ImageUrl = "https://placehold.co/600x400?text=Otomasyon",
+                            Price = 3500m,
+                            Title = "Restoran Otomasyonu"
                         });
                 });
 #pragma warning restore 612, 618

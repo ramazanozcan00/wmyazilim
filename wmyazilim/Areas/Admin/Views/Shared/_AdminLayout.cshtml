@@ -4,88 +4,73 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Admin Paneli</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/css/site.css" />
-    <style>
-        :root {
-            --sidebar-width: 260px;
-        }
-
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .sidebar {
-            width: var(--sidebar-width);
-            height: 100vh;
-            position: fixed;
-            background: #0b1220;
-            color: white;
-            transition: all 0.3s;
-            z-index: 1000;
-        }
-
-        .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 2rem;
-        }
-
-        .nav-link-admin {
-            color: rgba(255,255,255,0.7);
-            padding: 0.8rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-            .nav-link-admin:hover, .nav-link-admin.active {
-                color: white;
-                background: rgba(255,255,255,0.1);
-                border-left: 4px solid var(--primary);
-            }
-
-        .admin-card {
-            background: white;
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-    </style>
 </head>
-<body>
-    <aside class="sidebar">
-        <div class="p-4 border-bottom border-secondary mb-3">
-            <h5 class="fw-bold mb-0">WM Admin</h5>
+<body class="admin-theme">
+
+    <aside class="admin-sidebar">
+        <div class="px-3 mb-5">
+            <a href="/Admin" class="d-flex align-items-center gap-2 text-decoration-none text-white">
+                <div class="bg-primary rounded-3 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                    <i class="bi bi-grid-fill small"></i>
+                </div>
+                <span class="fw-bold fs-5 tracking-tight">WM<span class="text-primary-light">Panel</span></span>
+            </a>
         </div>
-        <nav>
-            <a href="/Admin/Home/Index" class="nav-link-admin">
+
+        <nav class="flex-grow-1 px-2">
+            <p class="text-uppercase text-white-50 small fw-bold px-3 mb-2" style="font-size: 0.7rem;">Menu</p>
+
+            <a href="/Admin/Home/Index" class="nav-link-admin @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
                 <i class="bi bi-speedometer2"></i> Dashboard
             </a>
-            <a href="/Admin/Products" class="nav-link-admin">
+            <a href="/Admin/Products" class="nav-link-admin @(ViewContext.RouteData.Values["controller"]?.ToString() == "Products" ? "active" : "")">
                 <i class="bi bi-box-seam"></i> Ürün Yönetimi
             </a>
-            <a href="/Admin/DemoRequests" class="nav-link-admin">
+            <a href="/Admin/DemoRequests" class="nav-link-admin @(ViewContext.RouteData.Values["controller"]?.ToString() == "DemoRequests" ? "active" : "")">
                 <i class="bi bi-envelope-paper"></i> Demo Talepleri
             </a>
-            <div class="mt-5 p-3">
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-outline-light btn-sm w-100">
-                    <i class="bi bi-box-arrow-left"></i> Siteye Dön
-                </a>
-            </div>
+            <a href="/Admin/SiteSettings" class="nav-link-admin @(ViewContext.RouteData.Values["controller"]?.ToString() == "SiteSettings" ? "active" : "")">
+                <i class="bi bi-sliders"></i> Site Ayarları
+            </a>
         </nav>
+
+        <div class="px-3 mt-auto">
+            <a href="/" target="_blank" class="btn btn-outline-light btn-sm w-100 d-flex align-items-center justify-content-center gap-2">
+                <i class="bi bi-box-arrow-up-right"></i> Siteye Görüntüle
+            </a>
+        </div>
     </aside>
 
-    <main class="main-content">
-        <header class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold">@ViewData["Title"]</h2>
-            <div class="user-info d-flex align-items-center gap-3">
-                <span class="text-muted small">Hoşgeldin, Admin</span>
-                <div class="bg-primary rounded-circle" style="width:35px; height:35px;"></div>
+    <main class="admin-content">
+        <header class="d-flex justify-content-between align-items-center mb-5 pb-3 border-bottom bg-white p-3 rounded-3 shadow-sm">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">@ViewData["Title"]</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 small">
+                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Admin</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+            </div>
+
+            <div class="d-flex align-items-center gap-4">
+                <div class="d-flex align-items-center gap-3 ps-3 border-start">
+                    <div class="text-end d-none d-sm-block">
+                        <small class="d-block fw-bold text-dark">Admin</small>
+                        <small class="d-block text-muted" style="font-size: 0.75rem;">Yönetici</small>
+                    </div>
+                    <div class="bg-light rounded-circle border d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+                        <i class="bi bi-person-fill text-secondary"></i>
+                    </div>
+                </div>
             </div>
         </header>
+
         @RenderBody()
     </main>
 
